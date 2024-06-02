@@ -73,3 +73,7 @@ anim.start();
 document.querySelector('#container').addEventListener('click', () => {
 	document.querySelector('#how-to').style.display = 'none';
 });
+
+document.querySelector('#container').addEventListener('touchstart', () => {
+	document.querySelector('#how-to').style.display = 'none';
+});

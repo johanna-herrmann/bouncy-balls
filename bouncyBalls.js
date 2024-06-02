@@ -62,6 +62,10 @@ stage.on('click', () => {
 	circles.push(new Circle());
 });
 
+stage.on('touchstart', () => {
+	circles.push(new Circle());
+});
+
 const anim = new Konva.Animation(updateCircles, bubbles);
 
 anim.start();

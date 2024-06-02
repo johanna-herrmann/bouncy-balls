@@ -65,3 +65,7 @@ stage.on('click', () => {
 const anim = new Konva.Animation(updateCircles, bubbles);
 
 anim.start();
+
+document.querySelector('#container').addEventListener('click', () => {
+	document.querySelector('#how-to').style.display = 'none';
+});

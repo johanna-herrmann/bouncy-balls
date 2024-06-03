@@ -54,23 +54,10 @@ function updateBalls () {
 }
 
 function updateBall (ball) {
-	let x = ball.shape.x();
-	let y = ball.shape.y();
-	x += ball.dx;
-	y += ball.dy;
-	if (x < ball.radius || x > width - ball.radius) {
-		ball.dx = -ball.dx;
-		x += ball.dx;
-	}
-	if (y < ball.radius || y > height - ball.radius) {
-		ball.dy = -ball.dy;
-		y += ball.dy;
-	}
-	ball.shape.x(x);
-	ball.shape.y(y);
+	moveX(ball);
+	moveY(ball);
+	bounceOnWalls(ball);
 }
-
-// Maths
 
 function getRandomColor () {
 	const saturation = getRandomNumberInRange(25, 100);
@@ -92,4 +79,31 @@ function getRandomVelocity () {
 function getRandomNumberInRange (min, max) {
 	const diff = max - min;
 	return Math.round(Math.random() * diff) + min;
+}
+
+function moveX (ball) {
+	ball.shape.x(ball.shape.x() + ball.dx);
+}
+
+function moveY (ball) {
+	ball.shape.y(ball.shape.y() + ball.dy);
+}
+
+function bounceOnWalls (ball) {
+	if (ball.shape.x() < ball.radius || ball.shape.x() > (width - ball.radius)) {
+		bounceX(ball);
+	}
+	if (ball.shape.y() < ball.radius || ball.shape.y() > (height - ball.radius)) {
+		bounceY(ball);
+	}
+}
+
+function bounceX (ball) {
+	ball.dx = -ball.dx;
+	moveX(ball);
+}
+
+function bounceY (ball) {
+	ball.dy = -ball.dy;
+	moveY(ball);
 }

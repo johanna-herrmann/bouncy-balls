@@ -2,6 +2,13 @@ function getRandomNumberInRange (min, max) {
 	const diff = max - min;
 	return Math.round(Math.random() * diff) + min;
 }
+
+function getRandomColor () {
+	const saturation = getRandomNumberInRange(25, 100);
+	const lightness = getRandomNumberInRange(20, 75);
+	const hue = getRandomNumberInRange(0, 360);
+	return `hsl(${hue} ${saturation}% ${lightness}%)`;
+}
 		
 function Circle () {
 	this.radius = getRandomNumberInRange(10, 20);

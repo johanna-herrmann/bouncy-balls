@@ -4,15 +4,15 @@ function getRandomNumberInRange (min, max) {
 }
 		
 function Circle () {
-	this.radius = getRandomNumberInRange(5, 225);
+	this.radius = getRandomNumberInRange(10, 20);
 	const x = getRandomNumberInRange(this.radius, width-this.radius);
 	const y = getRandomNumberInRange(this.radius, height-this.radius);
 	const color = colors[getRandomNumberInRange(0, colors.length-1)];
-	const velocityX = getRandomNumberInRange(-10, 10);
-	const velocityY = getRandomNumberInRange(-10, 10);
+	const velocityX = getRandomNumberInRange(-7, 7);
+	const velocityY = getRandomNumberInRange(-7, 7);
 	this.dx = velocityX;
 	this.dy = velocityY;
-	this.shape = new Konva.Circle({ radius: this.radius, x, y, stroke: color });
+	this.shape = new Konva.Circle({ radius: this.radius, x, y, fill: color });
 	bubbles.add(this.shape);
 }
 
@@ -39,22 +39,28 @@ function updateCircles () {
 	});
 }
 
+function update () {
+	updateCircles();
+}
+
 
 const width = window.innerWidth;
 const height = window.innerHeight;
 const colors = ['red', 'orange', 'yellow', 'green', 'blue', 'purple'];
 const stage = new Konva.Stage({
-	container: 'container',   // id of container <div>
+	container: 'container',
 	width,
 	height
 });
 
-const background = new Konva.Layer(/*{ width, height }*/);
-const bubbles = new Konva.Layer(/*{ width, height }*/);
+const background = new Konva.Layer();
+const bubbles = new Konva.Layer({ clearBeforeDraw: false });
 stage.add(background, bubbles);
 
-const bgRect = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'black' });
-background.add(bgRect);
+const bubblesBg = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'rgba(0, 0, 0, 0.25)' });
+const bg = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'black' });
+bubbles.add(bubblesBg);
+background.add(bg);
 
 const circles = [];
 
@@ -66,7 +72,7 @@ stage.on('touchstart', () => {
 	circles.push(new Circle());
 });
 
-const anim = new Konva.Animation(updateCircles, bubbles);
+const anim = new Konva.Animation(update, bubbles);
 
 anim.start();
 

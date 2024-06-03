@@ -9,14 +9,23 @@ function getRandomColor () {
 	const hue = getRandomNumberInRange(0, 360);
 	return `hsl(${hue} ${saturation}% ${lightness}%)`;
 }
+
+function getRandomVelocity () {
+	let velocityX = 0;
+	let velocityY = 0;
+	while (velocityX === 0 && velocityY === 0) {
+		velocityX = getRandomNumberInRange(-7, 7);
+		velocityY = getRandomNumberInRange(-7, 7);
+	}
+	return { velocityX, velocityY };
+}
 		
 function Circle () {
 	this.radius = getRandomNumberInRange(10, 20);
 	const x = getRandomNumberInRange(this.radius, width-this.radius);
 	const y = getRandomNumberInRange(this.radius, height-this.radius);
-	const color = colors[getRandomNumberInRange(0, colors.length-1)];
-	const velocityX = getRandomNumberInRange(-7, 7);
-	const velocityY = getRandomNumberInRange(-7, 7);
+	const color = getRandomColor();
+	const { velocityX, velocityY } = getRandomVelocity();
 	this.dx = velocityX;
 	this.dy = velocityY;
 	this.shape = new Konva.Circle({ radius: this.radius, x, y, fill: color });

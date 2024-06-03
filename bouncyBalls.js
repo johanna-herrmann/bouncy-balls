@@ -57,6 +57,7 @@ function updateBall (ball) {
 	moveX(ball);
 	moveY(ball);
 	bounceOnWalls(ball);
+	changeColorOnCollision(ball);
 }
 
 function getRandomColor () {
@@ -106,4 +107,24 @@ function bounceX (ball) {
 function bounceY (ball) {
 	ball.dy = -ball.dy;
 	moveY(ball);
+}
+
+function changeColorOnCollision (self) {
+	balls.forEach ((other) => {
+		if (self == other) {
+			return;
+		}
+		const distance = calculateBallDistance (self, other);
+		const maxDistance = self.radius + other.radius;
+		if (distance < maxDistance) {
+			self.shape.fill(getRandomColor());
+			other.shape.fill(getRandomColor());
+		}
+	});
+}
+
+function calculateBallDistance (ballOne, ballTwo) {
+	const xDistance = Math.abs(ballOne.shape.x() - ballTwo.shape.x());
+	const yDistance = Math.abs(ballOne.shape.y() - ballTwo.shape.y());
+	return Math.sqrt(xDistance**2 + yDistance**2);
 }

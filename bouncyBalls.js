@@ -60,6 +60,29 @@ function updateBall (ball) {
 	changeColorOnCollision(ball);
 }
 
+function bounceOnWalls (ball) {
+	if (ball.shape.x() < ball.radius || ball.shape.x() > (width - ball.radius)) {
+		bounceX(ball);
+	}
+	if (ball.shape.y() < ball.radius || ball.shape.y() > (height - ball.radius)) {
+		bounceY(ball);
+	}
+}
+
+function changeColorOnCollision (self) {
+	balls.forEach ((other) => {
+		if (self == other) {
+			return;
+		}
+		const distance = calculateBallDistance (self, other);
+		const maxDistance = self.radius + other.radius;
+		if (distance < maxDistance) {
+			self.shape.fill(getRandomColor());
+			other.shape.fill(getRandomColor());
+		}
+	});
+}
+
 function getRandomColor () {
 	const saturation = getRandomNumberInRange(25, 100);
 	const lightness = getRandomNumberInRange(20, 75);
@@ -82,23 +105,6 @@ function getRandomNumberInRange (min, max) {
 	return Math.round(Math.random() * diff) + min;
 }
 
-function moveX (ball) {
-	ball.shape.x(ball.shape.x() + ball.dx);
-}
-
-function moveY (ball) {
-	ball.shape.y(ball.shape.y() + ball.dy);
-}
-
-function bounceOnWalls (ball) {
-	if (ball.shape.x() < ball.radius || ball.shape.x() > (width - ball.radius)) {
-		bounceX(ball);
-	}
-	if (ball.shape.y() < ball.radius || ball.shape.y() > (height - ball.radius)) {
-		bounceY(ball);
-	}
-}
-
 function bounceX (ball) {
 	ball.dx = -ball.dx;
 	moveX(ball);
@@ -109,18 +115,12 @@ function bounceY (ball) {
 	moveY(ball);
 }
 
-function changeColorOnCollision (self) {
-	balls.forEach ((other) => {
-		if (self == other) {
-			return;
-		}
-		const distance = calculateBallDistance (self, other);
-		const maxDistance = self.radius + other.radius;
-		if (distance < maxDistance) {
-			self.shape.fill(getRandomColor());
-			other.shape.fill(getRandomColor());
-		}
-	});
+function moveX (ball) {
+	ball.shape.x(ball.shape.x() + ball.dx);
+}
+
+function moveY (ball) {
+	ball.shape.y(ball.shape.y() + ball.dy);
 }
 
 function calculateBallDistance (ballOne, ballTwo) {

@@ -15,5 +15,8 @@ which is powered by HTML [Canvas](https://www.w3schools.com/graphics/canvas_intr
 You want to see a living demo of **Bouncy Balls**? \
 &rarr; https://bouncy-balls.johanna-herrmann.de/
 
+## Version
+1.0.0_alpha (2024-06-04)
+
 ## License
 This "software" is ["MIT"-licensed](./LICENSE).

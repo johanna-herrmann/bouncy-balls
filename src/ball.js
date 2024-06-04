@@ -11,7 +11,7 @@ class Ball {
 		this.shape = new Konva.Circle({ radius, x, y, fill });
 	}
 
-    add (layer) {
+    addToLayer (layer) {
         layer.add(this.shape);
     }
     

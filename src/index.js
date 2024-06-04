@@ -12,18 +12,16 @@ const stage = new Konva.Stage({
 	height
 });
 
-const staticLayer = new Konva.Layer();
-const dynamicLayer = new Konva.Layer({ clearBeforeDraw: false });
-stage.add(staticLayer, dynamicLayer);
+//const staticLayer = new Konva.Layer();
+const layer = new Konva.Layer({ clearBeforeDraw: false });
+stage.add(layer);
 
-const dynamicBackground = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'rgba(0, 0, 0, 0.25)' });
-const staticBackground = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'black' });
-dynamicLayer.add(dynamicBackground);
-staticLayer.add(staticBackground);
+const background = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'rgba(0, 0, 0, 0.25)' });
+layer.add(background);
 
 const balls = [];
 
-const updateLoop = new Konva.Animation(update, dynamicLayer);
+const updateLoop = new Konva.Animation(update, layer);
 
 updateLoop.start();
 
@@ -40,7 +38,7 @@ function spawnBall () {
 		getRandomVelocity()
 	);
 	balls.push(ball);
-	ball.add(dynamicLayer);
+	ball.addToLayer(layer);
 	document.querySelector('#how-to').style.display = 'none';
 }
 

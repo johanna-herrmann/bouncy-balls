@@ -57,28 +57,21 @@ function updateBall (ball) {
 	ball.moveX();
 	ball.moveY();
 	bounceOnWalls(ball);
-	changeColorOnCollision(ball);
 }
 
 function bounceOnWalls (ball) {
+	let bounced = false;
 	if (ball.x < ball.radius || ball.x > (width - ball.radius)) {
 		ball.bounceX();
+		bounced = true;
 	}
 	if (ball.y < ball.radius || ball.y > (height - ball.radius)) {
 		ball.bounceY();
+		bounced = true;
 	}
-}
-
-function changeColorOnCollision (self) {
-	balls.forEach ((other) => {
-		if (self == other) {
-			return;
-		}
-		if (self.isCollidingWith(other)) {
-			self.changeColor(getRandomColor());
-			other.changeColor(getRandomColor());
-		}
-	});
+	if (bounced) {
+		ball.changeColor(getRandomColor());
+	}
 }
 
 function getRandomColor () {
@@ -99,6 +92,11 @@ function getRandomVelocity () {
 }
 
 function getRandomNumberInRange (min, max) {
+	if (min > max) {
+		const tmp = min;
+		min = max;
+		max = tmp;
+	}
 	const diff = max - min;
 	return Math.round(Math.random() * diff) + min;
 }

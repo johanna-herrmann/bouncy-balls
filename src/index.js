@@ -1,4 +1,5 @@
 import Konva from 'konva';
+import Ball from './ball.js';
 
 const width = window.innerWidth;
 const height = window.innerHeight;
@@ -29,20 +30,17 @@ stage.on('click', spawnBall);
 stage.on('touchstart', spawnBall);
 
 function spawnBall () {
-	balls.push(new Ball());
+	const radius = getRandomNumberInRange(10, 20);
+	const ball = new Ball(
+		radius,
+		getRandomNumberInRange(radius, width - radius),
+		getRandomNumberInRange(radius, width - radius),
+		getRandomColor(),
+		getRandomVelocity()
+	);
+	balls.push(ball);
+	ball.add(dynamicLayer);
 	document.querySelector('#how-to').style.display = 'none';
-}
-
-function Ball () {
-	this.radius = getRandomNumberInRange(10, 20);
-	const x = getRandomNumberInRange(this.radius, width-this.radius);
-	const y = getRandomNumberInRange(this.radius, height-this.radius);
-	const color = getRandomColor();
-	const { velocityX, velocityY } = getRandomVelocity();
-	this.dx = velocityX;
-	this.dy = velocityY;
-	this.shape = new Konva.Circle({ radius: this.radius, x, y, fill: color });
-	dynamicLayer.add(this.shape);
 }
 
 function update () {
@@ -56,18 +54,18 @@ function updateBalls () {
 }
 
 function updateBall (ball) {
-	moveX(ball);
-	moveY(ball);
+	ball.moveX();
+	ball.moveY();
 	bounceOnWalls(ball);
 	changeColorOnCollision(ball);
 }
 
 function bounceOnWalls (ball) {
-	if (ball.shape.x() < ball.radius || ball.shape.x() > (width - ball.radius)) {
-		bounceX(ball);
+	if (ball.x < ball.radius || ball.x > (width - ball.radius)) {
+		ball.bounceX();
 	}
-	if (ball.shape.y() < ball.radius || ball.shape.y() > (height - ball.radius)) {
-		bounceY(ball);
+	if (ball.y < ball.radius || ball.y > (height - ball.radius)) {
+		ball.bounceY();
 	}
 }
 
@@ -76,11 +74,9 @@ function changeColorOnCollision (self) {
 		if (self == other) {
 			return;
 		}
-		const distance = calculateBallDistance (self, other);
-		const maxDistance = self.radius + other.radius;
-		if (distance < maxDistance) {
-			self.shape.fill(getRandomColor());
-			other.shape.fill(getRandomColor());
+		if (self.isCollidingWith(other)) {
+			self.changeColor(getRandomColor());
+			other.changeColor(getRandomColor());
 		}
 	});
 }
@@ -93,40 +89,16 @@ function getRandomColor () {
 }
 
 function getRandomVelocity () {
-	let velocityX = 0;
-	let velocityY = 0;
-	while (velocityX === 0 && velocityY === 0) {
-		velocityX = getRandomNumberInRange(-7, 7);
-		velocityY = getRandomNumberInRange(-7, 7);
+	let dx = 0;
+	let dy = 0;
+	while (dx === 0 && dy === 0) {
+		dx = getRandomNumberInRange(-7, 7);
+		dy = getRandomNumberInRange(-7, 7);
 	}
-	return { velocityX, velocityY };
+	return { dx, dy };
 }
 
 function getRandomNumberInRange (min, max) {
 	const diff = max - min;
 	return Math.round(Math.random() * diff) + min;
-}
-
-function bounceX (ball) {
-	ball.dx = -ball.dx;
-	moveX(ball);
-}
-
-function bounceY (ball) {
-	ball.dy = -ball.dy;
-	moveY(ball);
-}
-
-function moveX (ball) {
-	ball.shape.x(ball.shape.x() + ball.dx);
-}
-
-function moveY (ball) {
-	ball.shape.y(ball.shape.y() + ball.dy);
-}
-
-function calculateBallDistance (ballOne, ballTwo) {
-	const xDistance = Math.abs(ballOne.shape.x() - ballTwo.shape.x());
-	const yDistance = Math.abs(ballOne.shape.y() - ballTwo.shape.y());
-	return Math.sqrt(xDistance**2 + yDistance**2);
 }

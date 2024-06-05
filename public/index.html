@@ -6,8 +6,15 @@
 		<link rel="stylesheet" href="styles.css">
 	</head>
 	<body>
-		<div id="container"></div>
-		<div id="how-to">Each click/tab spawns a new circle</div>
+		<header>
+			<div id="headerContent">
+				<label>Balls: <input id ="numberInput" type="number" min="1" max="150" value="1"></label>
+				<button id="spawnButton">Spawn at random position</button>
+				or click/tab at any position in the black area to spawn balls there.
+			</div>
+		</header>
+
+		<main id="ballsArea"></main>
 		
 		<script src="main.js"></script>
 	</body>

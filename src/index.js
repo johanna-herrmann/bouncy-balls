@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import { Stage, Layer, Rect, Animation } from 'konva';
 import Ball from './ball.js';
 import { getRandomColor, getRandomVelocity, getRandomNumberInRange } from './random.js';
 
@@ -6,22 +6,21 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 const container = 'container';
 
-const stage = new Konva.Stage({
+const stage = new Stage({
 	container,
 	width,
 	height
 });
 
-//const staticLayer = new Konva.Layer();
-const layer = new Konva.Layer({ clearBeforeDraw: false });
+const layer = new Layer({ clearBeforeDraw: false });
 stage.add(layer);
 
-const background = new Konva.Rect({ x: 0, y: 0, width, height, fill: 'rgba(0, 0, 0, 0.25)' });
+const background = new Rect({ x: 0, y: 0, width, height, fill: 'rgba(0, 0, 0, 0.05)' });
 layer.add(background);
 
 const balls = [];
 
-const updateLoop = new Konva.Animation(update, layer);
+const updateLoop = new Animation(update, layer);
 
 updateLoop.start();
 

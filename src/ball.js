@@ -1,4 +1,4 @@
-import Konva from 'konva';
+import { Circle } from 'konva';
 
 class Ball {
 	constructor(radius, x, y, fill, { dx, dy }) {
@@ -8,7 +8,7 @@ class Ball {
 		this.dx = dx;
 		this.dy = dy;
         this.fill = fill;
-		this.shape = new Konva.Circle({ radius, x, y, fill });
+		this.shape = new Circle({ radius, x, y, fill });
 	}
 
     addToLayer (layer) {

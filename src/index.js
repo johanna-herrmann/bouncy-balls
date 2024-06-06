@@ -26,8 +26,6 @@ const updateLoop = new Animation(update, layer);
 
 updateLoop.start();
 
-//stage.on('click', spawnBall);
-//stage.on('touchend', spawnBall);
 document.querySelector('#spawnButton').addEventListener('click', () => {
 	spawnBalls(getRandomNumberInRange(0, width), getRandomNumberInRange(0, height));
 });
@@ -35,8 +33,12 @@ document.querySelector('#spawnButton').addEventListener('touchend', () => {
 	spawnBalls(getRandomNumberInRange(0, width), getRandomNumberInRange(0, height));
 });
 
-stage.addEventListener('click', (e) => {
-	spawnBalls(e.clientX, e.clientY);
+document.querySelector('#ballsArea').addEventListener('click', (e) => {
+	spawnBalls(e.clientX, e.clientY - HEADER_SIZE);
+});
+
+document.querySelector('#ballsArea').addEventListener('touchend', (e) => {
+	spawnBalls(e.changedTouches[0].clientX, e.changedTouches[0].clientY - HEADER_SIZE);
 });
 
 function spawnBalls (x, y) {
@@ -49,7 +51,7 @@ function spawnBalls (x, y) {
 	}
 	document.querySelector('#numberInput').value = count;
 	while (count-- > 0) {
-		spawnBall(x, y - HEADER_SIZE);
+		spawnBall(x, y);
 	}
 }
 

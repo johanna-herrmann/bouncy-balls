@@ -60,3 +60,9 @@ header #headerContent button:hover, header #headerContent input:focus {
 	top: 50px;
 	left: 0;
 }
+
+@media (max-width: 780px) {
+    header, input, button {
+        font-size: 0.8em;
+    }
+}

@@ -24,8 +24,6 @@ const balls = [];
 
 const updateLoop = new Animation(update, layer);
 
-updateLoop.start();
-
 document.querySelector('#spawnButton').addEventListener('click', () => {
 	spawnBalls(getRandomNumberInRange(0, width), getRandomNumberInRange(0, height));
 });
@@ -49,6 +47,11 @@ function spawnBalls (x, y) {
 	if (count < 1) {
 		count = 1;
 	}
+
+	if (!updateLoop.isRunning()) {
+		updateLoop.start();
+	}
+
 	document.querySelector('#numberInput').value = count;
 	while (count-- > 0) {
 		spawnBall(x, y);

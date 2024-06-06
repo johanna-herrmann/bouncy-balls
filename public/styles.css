@@ -1,7 +1,11 @@
 @font-face {
     font-family: 'Salsa';
     src: url(salsa.woff2) format('woff2');
-  }
+}
+
+* {
+    box-sizing: border-box;
+}
 
 body {
     position: fixed;
@@ -25,9 +29,10 @@ header {
 header #headerContent {
     position: fixed;
     top: 25px;
-    left: 10px;
+    left: 0;
     transform: translateY(-50%);
     color: white;
+    padding: 0 5px;
 }
 
 header #headerContent input,
@@ -62,7 +67,23 @@ header #headerContent button:hover, header #headerContent input:focus {
 }
 
 @media (max-width: 780px) {
+    header #positionedSpawnHint {
+        display: block;
+    }
+
     header, input, button {
         font-size: 0.8em;
+    }
+}
+
+@media (max-width: 391px) {
+    header, input, button {
+        font-size: 0.7em;
+    }
+}
+
+@media (max-width: 343px) {
+    header, input, button {
+        font-size: 0.6em;
     }
 }

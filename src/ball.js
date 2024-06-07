@@ -1,7 +1,7 @@
 import { Circle } from 'konva';
 
 class Ball {
-	constructor(radius, x, y, { dx, dy }) {
+	constructor(radius, x, y, { dx, dy }, layer) {
 		this.radius = radius;
         this.x = x;
         this.y = y;
@@ -10,11 +10,8 @@ class Ball {
 		this.shape = new Circle({ radius, x, y });
         this.bounces = 0;
         this.updateColor();
-	}
-
-    addToLayer (layer) {
         layer.add(this.shape);
-    }
+	}
     
     moveX () {
         this.x += this.dx;
@@ -37,14 +34,17 @@ class Ball {
     }
 
     bounceOnWall (width, height) {
+        let bounces = 0;
         if (this.x < this.radius || this.x > (width - this.radius)) {
             this.bounceX();
-            this.bounces++;
+            bounces++;
         }
         if (this.y < this.radius || this.y > (height - this.radius)) {
             this.bounceY();
-            this.bounces++;
+            bounces++;
         }
+        this.bounces += bounces;
+        return bounces;
     }
 
     updateColor (width, height) {

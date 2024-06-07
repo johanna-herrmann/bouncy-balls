@@ -35,7 +35,6 @@ header #headerContent {
     padding: 0 5px;
 }
 
-header #headerContent input,
 header #headerContent button {
     background: hsl(244, 37%, 20%);
     color: white;
@@ -43,11 +42,6 @@ header #headerContent button {
     border: 1px solid hsl(244, 37%, 10%);
     border-radius: 5px;
     font-family: Salsa, sans-serif;
-}
-
-header #headerContent input:hover,
-header #headerContent input:focus {
-    border: 1px solid hsl(244, 37%, 60%);
 }
 
 header #headerContent button {
@@ -60,30 +54,54 @@ header #headerContent button:hover, header #headerContent input:focus {
     border: 1px solid hsl(244, 37%, 20%);
 }
 
+header #githubLink {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    text-decoration: none;
+}
+
+header #githubLink svg {
+    width: 40px;
+    height: 40px;
+}
+
 #ballsArea {
 	position: fixed;
 	top: 50px;
 	left: 0;
 }
 
-@media (max-width: 780px) {
+@media (max-width: 707px) {
     header #positionedSpawnHint {
         display: block;
     }
 
-    header, input, button {
+    header, button {
         font-size: 0.8em;
     }
 }
 
-@media (max-width: 391px) {
-    header, input, button {
+@media (max-width: 437px) {
+    header, button {
         font-size: 0.7em;
     }
 }
 
-@media (max-width: 343px) {
-    header, input, button {
+@media (max-width: 377px) {
+    header #githubLink {
+        top: 2.5px;
+        right: 2.5px;
+    }
+
+    header #githubLink svg {
+        width: 20px;
+        height: 20px;
+    }
+}
+
+@media (max-width: 344px) {
+    header, button {
         font-size: 0.6em;
     }
 }

@@ -25,34 +25,26 @@ const balls = [];
 const updateLoop = new Animation(update, layer);
 
 document.querySelector('#spawnButton').addEventListener('click', () => {
-	spawnBalls(getRandomNumberInRange(0, width), getRandomNumberInRange(0, height));
-});
-document.querySelector('#spawnButton').addEventListener('touchend', () => {
-	spawnBalls(getRandomNumberInRange(0, width), getRandomNumberInRange(0, height));
+	spawnBalls({});
 });
 
 document.querySelector('#ballsArea').addEventListener('click', (e) => {
-	spawnBalls(e.clientX, e.clientY - HEADER_SIZE);
+	spawnBalls(e);
 });
 
 document.querySelector('#ballsArea').addEventListener('touchend', (e) => {
-	spawnBalls(e.changedTouches[0].clientX, e.changedTouches[0].clientY - HEADER_SIZE);
+	spawnBalls(e.changedTouches[0]);
 });
 
-function spawnBalls (x, y) {
-	let count = parseInt(document.querySelector('#numberInput').value);
-	if (count > 150) {
-		count = 150;
-	}
-	if (count < 1) {
-		count = 1;
-	}
+function spawnBalls ({ clientX, clientY }) {
+	let count = getRandomNumberInRange(2, 25);
+	const x = clientX ?? getRandomNumberInRange(0, width);
+	const y = clientY ? clientY - HEADER_SIZE : getRandomNumberInRange(0, height);
 
 	if (!updateLoop.isRunning()) {
 		updateLoop.start();
 	}
 
-	document.querySelector('#numberInput').value = count;
 	while (count-- > 0) {
 		spawnBall(x, y);
 	}

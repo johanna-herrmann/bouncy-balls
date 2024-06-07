@@ -64,6 +64,17 @@ class Ball {
         }
         return false;
     }
+
+    handleResize (width, height) {
+        if (this.x > (width - this.radius)) {
+            this.x = width - this.radius;
+            this.shape.x(this.x);
+        }
+        if (this.y > (height - this.radius)) {
+            this.y = height - this.radius;
+            this.shape.y(this.y);
+        }
+    }
 }
 
 function calculateHueByPosition (x, y, width, height) {

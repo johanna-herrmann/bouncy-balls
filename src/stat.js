@@ -8,7 +8,7 @@ const shadowOffset = { x: 3, y: 3 };
 const shadowBlur = 2;
 
 class Stat {
-    constructor (name, value, maxDigits, group, x, y) {
+    constructor (name, value, maxDigits, group, x, height) {
         this.name = name;
         this.value = value;
         this.maxDigits = maxDigits;
@@ -21,15 +21,16 @@ class Stat {
             shadowOffset,
             shadowBlur,
             x,
-            y: y - fontSize,
+            y: calculateY(height),
             text: buildText(this)
         });
         group.add(this.shape);
     }
 
-    update (value) {
+    update (value, height) {
         this.value = value;
         this.shape.text(buildText(this));
+        this.shape.y(calculateY(height));
     }
 }
 
@@ -39,6 +40,10 @@ function buildText (stat) {
     const value = exeedsDisgits ? maxValue : stat.value;
     const plus = exeedsDisgits ? '+' : '';
     return `${stat.name}: ${value}${plus}`;
+}
+
+function calculateY (height) {
+    return height - 5 - fontSize;
 }
 
 export default Stat;

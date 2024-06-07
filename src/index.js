@@ -1,4 +1,4 @@
-import { Stage, Layer, Rect, Animation } from 'konva';
+import { Stage, Layer, Group, Rect, Animation } from 'konva';
 import Ball from './ball.js';
 import Stat from './stat.js';
 import { getRandomVelocity, getRandomNumberInRange } from './random.js';
@@ -12,7 +12,7 @@ const container = 'ballsArea';
 const balls = [];
 let bounces = 0;
 
-const { updateLoop, layer, stats } = initialze();
+const { updateLoop, ballsGroup, stats, evilDot } = initialze();
 
 document.querySelector('#spawnButton').addEventListener('click', () => {
 	spawnBalls({});
@@ -37,19 +37,25 @@ function initialze () {
 	stage.add(layer);
 	
 	const background = new Rect({ x: 0, y: 0, width, height, fill: 'rgba(0, 0, 0, 0.25)' });
-	layer.add(background);
+	const ballsGroup = new Group({ x: 0, y: 0, width, height});
+	const statsGroup = new Group({ x: 0, y: 0, width, height});
+	const evilDot = new Rect({ x: getRandomNumberInRange(0, width), y: getRandomNumberInRange(0, height), width: 1, height: 1, fill: 'white' });
+	evilDot.hide();
+	ballsGroup.add(background, evilDot);
+	layer.add(ballsGroup, statsGroup);
 
-	const stats = initializeStats(layer);
+	const stats = initializeStats(statsGroup);
 
 	const updateLoop = new Animation(update, layer);
 
-	return { updateLoop, layer, stats };
+	return { updateLoop, ballsGroup, stats, evilDot };
 }
 
-function initializeStats (layer) {
+function initializeStats (statsGroup) {
 	return {
-		balls: new Stat('Balls', 0, 500, layer, 5, height - 5),
-		bounces: new Stat('Bounces', 0, Number.MAX_SAFE_INTEGER, layer, 100, height - 5)
+		balls: new Stat('Balls', 0, 3, statsGroup, 5, height - 5),
+		bounces: new Stat('Bounces', 0, 8, statsGroup, 75, height - 5),
+		destroys: new Stat('Destroyed', 0, 6, statsGroup, 200, height - 5)
 	}
 }
 
@@ -65,6 +71,10 @@ function spawnBalls ({ clientX, clientY }) {
 	while (count-- > 0 && balls.length < 500) {
 		spawnBall(x, y);
 	}
+
+	evilDot.x(getRandomNumberInRange(0, width));
+	evilDot.y(getRandomNumberInRange(0, height));
+	evilDot.show();
 }
 
 function spawnBall (x, y) {
@@ -74,14 +84,14 @@ function spawnBall (x, y) {
 		Math.min(Math.max(x, radius), (width - radius)),
 		Math.min(Math.max(y, radius), (height - radius)),
 		getRandomVelocity(),
-		layer
+		ballsGroup
 	));
-	stats.balls.update(balls.length, balls.length + 1);
 }
 
 function update () {
 	updateBalls();
-	stats.bounces.update(bounces, balls.length + 2);
+	stats.balls.update(balls.length);
+	stats.bounces.update(bounces);
 }
 
 function updateBalls () {
@@ -95,4 +105,11 @@ function updateBall (ball) {
 	ball.moveY();
 	bounces += ball.bounceOnWall(width, height);
 	ball.updateColor(width, height);
+	destroyOnEvilDot(ball);
+}
+
+function destroyOnEvilDot (ball) {
+	if (ball.destroyOnEvilDot(evilDot)) {
+		balls.splice(balls.indexOf(ball), 1);
+	}
 }

@@ -1,18 +1,17 @@
 import { Text } from 'konva';
 
 const fontFamily = 'Salsa, sans-serif';
-const fontSize = 16;
+const fontSize = 12;
 const fill = 'white';
-const maxValueFill = 'red';
 const shadowOpacity = 0.3;
 const shadowOffset = { x: 3, y: 3 };
 const shadowBlur = 2;
 
 class Stat {
-    constructor (name, value, maxValue, layer, x, y) {
+    constructor (name, value, maxDigits, group, x, y) {
         this.name = name;
         this.value = value;
-        this.maxValue = maxValue;
+        this.maxDigits = maxDigits;
         this.shape = new Text({
             fontFamily,
             fontSize,
@@ -23,23 +22,23 @@ class Stat {
             shadowBlur,
             x,
             y: y - fontSize,
-            text: buildText(name, value)
+            text: buildText(this)
         });
-        layer.add(this.shape);
+        group.add(this.shape);
     }
 
-    update (value, index) {
-        const color = value >= this.maxValue ? maxValueFill : fill;
+    update (value) {
         this.value = value;
-        this.shape.text(buildText(this.name, this.value));
-        this.shape.zIndex(index);
-        this.shape.fill(color);
-        this.shape.shadowColor(color);
+        this.shape.text(buildText(this));
     }
 }
 
-function buildText (name, value) {
-    return `${name}: ${value}`;
+function buildText (stat) {
+    const maxValue = Math.pow(10, stat.maxDigits) - 1;
+    const exeedsDisgits = stat.value > maxValue;
+    const value = exeedsDisgits ? maxValue : stat.value;
+    const plus = exeedsDisgits ? '+' : '';
+    return `${stat.name}: ${value}${plus}`;
 }
 
 export default Stat;

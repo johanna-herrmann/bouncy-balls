@@ -1,16 +1,15 @@
 import { Circle } from 'konva';
 
 class Ball {
-	constructor(radius, x, y, { dx, dy }, layer) {
+	constructor(radius, x, y, { dx, dy }, group) {
 		this.radius = radius;
         this.x = x;
         this.y = y;
 		this.dx = dx;
 		this.dy = dy;
 		this.shape = new Circle({ radius, x, y });
-        this.bounces = 0;
         this.updateColor();
-        layer.add(this.shape);
+        group.add(this.shape);
 	}
     
     moveX () {
@@ -43,7 +42,6 @@ class Ball {
             this.bounceY();
             bounces++;
         }
-        this.bounces += bounces;
         return bounces;
     }
 
@@ -54,6 +52,17 @@ class Ball {
         }
         this.fill = `hsl(${hue}, 100%, 50%)`;
         this.shape.fill(this.fill);
+    }
+
+    destroyOnEvilDot (dot) {
+        const xDistance = Math.abs(this.x) - Math.abs(dot.x());
+        const yDistance = Math.abs(this.y) - Math.abs(dot.y());
+        const distance = Math.sqrt(xDistance**2 + yDistance**2);
+        if (distance < this.radius) {
+            this.shape.destroy();
+            return true;
+        }
+        return false;
     }
 }
 

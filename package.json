@@ -1,7 +1,7 @@
 {
   "name": "bouncy-balls",
   "version": "1.0.0",
-  "description": "Interactive bouncing ball animation",
+  "description": "Interactive animation of color changing and bouncing balls",
   "private": true,
   "type": "module",
   "scripts": {

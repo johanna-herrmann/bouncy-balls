@@ -1,14 +1,15 @@
 import { Circle } from 'konva';
 
 class Ball {
-	constructor(radius, x, y, fill, { dx, dy }) {
+	constructor(radius, x, y, { dx, dy }) {
 		this.radius = radius;
         this.x = x;
         this.y = y;
 		this.dx = dx;
 		this.dy = dy;
-        this.fill = fill;
-		this.shape = new Circle({ radius, x, y, fill });
+		this.shape = new Circle({ radius, x, y });
+        this.bounces = 0;
+        this.updateColor();
 	}
 
     addToLayer (layer) {
@@ -35,17 +36,31 @@ class Ball {
         this.moveY();
     }
 
-    changeColor (fill) {
-        this.fill = fill;
-        this.shape.fill(fill);
+    bounceOnWall (width, height) {
+        if (this.x < this.radius || this.x > (width - this.radius)) {
+            this.bounceX();
+            this.bounces++;
+        }
+        if (this.y < this.radius || this.y > (height - this.radius)) {
+            this.bounceY();
+            this.bounces++;
+        }
     }
 
-    isCollidingWith (other) {
-        const minDistance = this.radius + other.radius;
-        const xDistance = Math.abs(this.x - other.x);
-	    const yDistance = Math.abs(this.y - other.y);
-	    return Math.sqrt(xDistance**2 + yDistance**2) < minDistance;
+    updateColor (width, height) {
+	    let hue = calculateHueByPosition(this.x, this.y, width, height);
+        if ((this.bounces) % 2 === 0) {
+            hue = (hue + 180) % 360;
+        }
+        this.fill = `hsl(${hue}, 100%, 50%)`;
+        this.shape.fill(this.fill);
     }
+}
+
+function calculateHueByPosition (x, y, width, height) {
+    const posMax = Math.max(x, y);
+	const screenMax = Math.max(width, height);
+	return posMax / screenMax * 360;
 }
 
 export default Ball;

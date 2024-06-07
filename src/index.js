@@ -1,6 +1,6 @@
 import { Stage, Layer, Rect, Animation } from 'konva';
 import Ball from './ball.js';
-import { getRandomColor, getRandomVelocity, getRandomNumberInRange } from './random.js';
+import { getRandomVelocity, getRandomNumberInRange } from './random.js';
 
 const HEADER_SIZE = 50;
 
@@ -64,7 +64,6 @@ function spawnBall (x, y) {
 		radius,
 		Math.min(Math.max(x, radius), (width - radius)),
 		Math.min(Math.max(y, radius), (height - radius)),
-		getRandomColor(),
 		getRandomVelocity()
 	);
 	balls.push(ball);
@@ -84,20 +83,6 @@ function updateBalls () {
 function updateBall (ball) {
 	ball.moveX();
 	ball.moveY();
-	bounceOnWalls(ball);
-}
-
-function bounceOnWalls (ball) {
-	let bounced = false;
-	if (ball.x < ball.radius || ball.x > (width - ball.radius)) {
-		ball.bounceX();
-		bounced = true;
-	}
-	if (ball.y < ball.radius || ball.y > (height - ball.radius)) {
-		ball.bounceY();
-		bounced = true;
-	}
-	if (bounced) {
-		ball.changeColor(getRandomColor());
-	}
+	ball.bounceOnWall(width, height);
+	ball.updateColor(width, height);
 }

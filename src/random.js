@@ -1,10 +1,3 @@
-function getRandomColor () {
-	const saturation = getRandomNumberInRange(25, 100);
-	const lightness = getRandomNumberInRange(20, 75);
-	const hue = getRandomNumberInRange(0, 360);
-	return `hsl(${hue} ${saturation}% ${lightness}%)`;
-}
-
 function getRandomVelocity () {
 	let dx = 0;
 	let dy = 0;
@@ -25,4 +18,4 @@ function getRandomNumberInRange (min, max) {
 	return Math.round(Math.random() * diff) + min;
 }
 
-export { getRandomColor, getRandomVelocity, getRandomNumberInRange }
+export { getRandomVelocity, getRandomNumberInRange }

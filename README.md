@@ -13,7 +13,7 @@ https://bouncy-balls.johanna-herrmann.de/
 https://dev-bouncy-balls.johanna-herrmann.de/
 
 ## Version
-1.0.0_alpha (2024-06-07)
+1.0.0_alpha (2024-06-08)
 
 ## License
 **Bouncy Balls** is ["MIT"-licensed](./LICENSE).

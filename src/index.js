@@ -48,8 +48,8 @@ function initialze () {
 
 function initializeStats (layer) {
 	return {
-		balls: new Stat('Balls', 0, layer, 5, height - 5),
-		bounces: new Stat('Bounces', 0, layer, 100, height - 5)
+		balls: new Stat('Balls', 0, 500, layer, 5, height - 5),
+		bounces: new Stat('Bounces', 0, Number.MAX_SAFE_INTEGER, layer, 100, height - 5)
 	}
 }
 
@@ -62,7 +62,7 @@ function spawnBalls ({ clientX, clientY }) {
 		updateLoop.start();
 	}
 
-	while (count-- > 0) {
+	while (count-- > 0 && balls.length < 500) {
 		spawnBall(x, y);
 	}
 }

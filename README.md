@@ -29,7 +29,7 @@ Pushing to `main` branch will trigger deployment to `Live`.
 * open browser at http://localhost:8080
 
 ## Version
-1.0.0 (2024-06-08)
+1.0.1 (2024-06-08)
 
 ## License
 **Bouncy Balls** is ["MIT"-licensed](./LICENSE).

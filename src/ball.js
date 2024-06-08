@@ -7,6 +7,7 @@ class Ball {
         this.y = y;
 		this.dx = dx;
 		this.dy = dy;
+        this.bounces = 0;
 		this.shape = new Circle({ radius, x, y });
         this.updateColor();
         group.add(this.shape);
@@ -42,12 +43,13 @@ class Ball {
             this.bounceY();
             bounces++;
         }
+        this.bounces += bounces;
         return bounces;
     }
 
     updateColor (width, height) {
 	    let hue = calculateHueByPosition(this.x, this.y, width, height);
-        if ((this.bounces) % 2 === 0) {
+        if ((this.bounces) % 2 !== 0) {
             hue = (hue + 180) % 360;
         }
         this.fill = `hsl(${hue}, 100%, 50%)`;

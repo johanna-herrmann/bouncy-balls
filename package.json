@@ -1,0 +1,40 @@
+{
+  "name": "bouncy-balls",
+  "version": "1.0.2",
+  "description": "Interactive animation of color changing and bouncing balls",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build_copyPublic && npm run build_webpack",
+    "build_copyPublic": "copyfiles --flat public/* dist",
+    "build_webpack": "webpack --mode production",
+    "serve": "webpack serve --mode=development",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/johanna-herrmann/bouncy-balls.git"
+  },
+  "keywords": [
+    "bouncing",
+    "balls",
+    "bouncy",
+    "animation"
+  ],
+  "author": "Johanna Herrmann",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/johanna-herrmann/bouncy-balls/issues"
+  },
+  "homepage": "https://github.com/johanna-herrmann/bouncy-balls#readme",
+  "dependencies": {
+    "konva": "^9.3.11"
+  },
+  "devDependencies": {
+    "canvas": "^2.11.2",
+    "copyfiles": "^2.4.1",
+    "webpack": "^5.91.0",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^5.0.4"
+  }
+}

@@ -1,19 +1,35 @@
 # Bouncy Balls
 
-**Bouncy Balls** is a simple gimmick, animating moving balls, bouncing on walls.
-
-## How to
-Click anywhere on the page to spawn a circle with random properties: starting position, size, color, moving speed, moving direction.
-Click again to spawn another circle. \
-All circles on the screnn are bouncing on walls (borders of inner view), like the famous dvd-logo-bouncing.
+Interactive animation of color changing and bouncing balls
 
 ## How it works, technically
 **Bouncy Balls** is powered by [Konva](https://www.npmjs.com/package/konva),
 which is powered by HTML [Canvas](https://www.w3schools.com/graphics/canvas_intro.asp).
 
-## Demo
-You want to see a living demo of **Bouncy Balls**? \
-&rarr; https://bouncy-balls.johanna-herrmann.de/
+## Live
+https://bouncy-balls.johanna-herrmann.de/
+
+## Dev
+https://dev-bouncy-balls.johanna-herrmann.de/
+
+## Development
+
+### Setup
+run `npm run install`
+
+### Trigger deployment
+
+**Bouncy Balls** is hosted by [AWS](https://aws.amazon.com/) Amplify.
+
+Pushing to `dev` branch will trigger deployment to `Dev`. \
+Pushing to `main` branch will trigger deployment to `Live`.
+
+### Test locally
+* run `npm run serve`
+* open browser at http://localhost:8080
+
+## Version
+1.0.2 (2024-06-08)
 
 ## License
-This "software" is ["MIT"-licensed](./LICENSE).
+**Bouncy Balls** is ["MIT"-licensed](./LICENSE).

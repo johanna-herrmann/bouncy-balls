@@ -94,8 +94,8 @@ function spawnBalls ({ clientX, clientY }) {
 		spawnBall(x, y);
 	}
 
-	evilDot.x(getRandomNumberInRange(0, width));
-	evilDot.y(getRandomNumberInRange(0, height));
+	evilDot.x(getRandomNumberInRange(MIN_EVIL_PADDING, width - MIN_EVIL_PADDING));
+	evilDot.y(getRandomNumberInRange(MIN_EVIL_PADDING, height - MIN_EVIL_PADDING));
 	evilDot.show();
 }
 

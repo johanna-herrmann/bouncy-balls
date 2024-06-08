@@ -12,8 +12,24 @@ https://bouncy-balls.johanna-herrmann.de/
 ## Dev
 https://dev-bouncy-balls.johanna-herrmann.de/
 
+## Development
+
+### Setup
+run `npm run install`
+
+### Trigger deployment
+
+**Bouncy Balls** is hosted by [AWS](https://aws.amazon.com/) Amplify.
+
+Pushing to `dev` branch will trigger deployment to `Dev`. \
+Pushing to `main` branch will trigger deployment to `Live`.
+
+### Test locally
+* run `npm run serve`
+* open browser at http://localhost:8080
+
 ## Version
-1.0.0_alpha (2024-06-08)
+1.0.0 (2024-06-08)
 
 ## License
 **Bouncy Balls** is ["MIT"-licensed](./LICENSE).
